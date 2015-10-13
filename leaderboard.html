@@ -1,0 +1,48 @@
+<head>
+	<title>
+		Leaderboard
+	</title>
+</head>
+<body>
+	{{> loginButtons}}
+	<h1>Leaderboard</h1>
+	{{> leaderboard}}
+	<h3>Add more players</h3>
+	{{> addPlayerForm}}
+</body>
+
+
+<template name= "leaderboard">
+	<ul>
+	{{#each player}}
+		<li class="player {{selectedClass}}">{{name}}: {{score}}</li>
+	{{/each}}
+	</ul>
+	<!-- <p style="color:red;">{{stuff}}</p> -->
+
+	<p>There are currently {{totalPlayers}} players in the game</p>
+
+	 
+	{{#if showSelectedPlayer}}
+		<p>You have selected 
+			<span class="emphasize">{{showSelectedPlayer.name}}</span>.
+			What do you wish to do:</p>
+		<input type="button" class="increment" value = "Give 5 points">
+		<input type="button" class="decrement" value = "Take 5 points">
+		<input type="button" class="delete" value = "remove Player">
+	{{else}}
+		<span class="emphasize">Select a player to see your options</span>
+	{{/if}}
+
+</template>
+
+<template name="addPlayerForm">
+	{{#if currentUser}}
+	<form>
+		<input type="text" name="newPlayerName">
+		<input type="number" name="newScore" min="0" max="100">
+		<input type="submit" value="Add Player">
+	</form>
+	{{/if}}
+</template>
+
