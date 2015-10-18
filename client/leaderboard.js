@@ -1,9 +1,5 @@
 
 
-PlayersList = new Mongo.Collection('players');
-// store the document into a variable, similarly to an array/df
-
-if(Meteor.isClient){
   Meteor.subscribe('thePlayers');  // see alo Meteor.publish for making data available to client
 
   Template.leaderboard.helpers({
@@ -95,44 +91,3 @@ if(Meteor.isClient){
 
     }
   });
-
-} // close isClient
-
-if(Meteor.isServer){
-  // the following makes "PlayersList" collection available to the client
-  Meteor.publish('thePlayers', function(){
-    var currentUserID = this.userId;
-    return PlayersList.find({createdBy: currentUserID})
-  });
-
-  // methods
-  Meteor.methods({
-    'sendLogMessage': function(){
-      console.log(Meteor.user() + Meteor.userId())
-    },
-
-    'insertPlayerData': function(playerNameVar, playerScore){
-      if (playerNameVar) {  // only run if string is NOT empty
-        if (isNaN(playerScore)) {playerScore = 0}  // change score to 0 if no score was set
-        var currentUserID = Meteor.userId();
-        PlayersList.insert({
-          name: playerNameVar,
-          score: playerScore,
-          createdBy: currentUserID
-        })
-      }
-    },
-
-    'removePlayerData': function(selectedPlayer) {
-      var currentUserID = Meteor.userId();
-      PlayersList.remove({_id: selectedPlayer, createdBy: currentUserID});
-    },
-
-    'modPlayerScore': function(selectedPlayer, newScore) {
-      var currentUserID=Meteor.userId();
-      PlayersList.update({_id: selectedPlayer, createdBy: currentUserID}, {$inc: {score: newScore}});
-    }
-
-  })
-
-}

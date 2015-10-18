@@ -1,16 +1,4 @@
-<head>
-	<title>
-		Leaderboard
-	</title>
-</head>
-<body>
-	{{> loginButtons}}
-	<h1>Leaderboard</h1>
-	{{> leaderboard}}
-	<h3>Add more players</h3>
-	{{> addPlayerForm}}
-</body>
-
+<!-- Templates for leaderboard app-->
 
 <template name= "leaderboard">
 	<ul>
@@ -22,9 +10,9 @@
 
 	<p>There are currently {{totalPlayers}} players in the game</p>
 
-	 
+
 	{{#if showSelectedPlayer}}
-		<p>You have selected 
+		<p>You have selected
 			<span class="emphasize">{{showSelectedPlayer.name}}</span>.
 			What do you wish to do:</p>
 		<input type="button" class="increment" value = "Give 5 points">
@@ -45,4 +33,3 @@
 	</form>
 	{{/if}}
 </template>
-
